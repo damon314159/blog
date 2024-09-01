@@ -12,16 +12,10 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:require-extensions/recommended',
-    'plugin:@typescript-eslint/stylistic',
     'airbnb',
     'prettier',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'unicorn',
-    'sort-exports',
-    'require-extensions',
-  ],
+  plugins: ['@typescript-eslint', 'unicorn', 'require-extensions'],
   rules: {
     'arrow-body-style': 'error',
     'prefer-arrow-callback': 'error',
@@ -59,9 +53,6 @@ module.exports = {
       'error',
       { allowSeparatedGroups: true, ignoreDeclarationSort: true },
     ],
-    'sort-exports/sort-exports': ['error', { sortDir: 'asc' }],
-    'sort-keys': 'error',
-    'sort-vars': 'error',
     'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'unix'],
     'unicorn/prefer-node-protocol': 'error',
@@ -70,19 +61,8 @@ module.exports = {
     '@typescript-eslint/no-confusing-void-expression': 'error',
     '@typescript-eslint/prefer-for-of': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-unsafe-function-type': 'off',
   },
-  overrides: [
-    {
-      // enable the rule specifically for TypeScript files
-      files: ['*.ts', '*.cts', '*.mts', '*.tsx'],
-      rules: {
-        '@typescript-eslint/explicit-function-return-type': [
-          'error',
-          { allowTypedFunctionExpressions: false },
-        ],
-      },
-    },
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
