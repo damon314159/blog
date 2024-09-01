@@ -2,18 +2,18 @@
   "name": "blog",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "MIT",
-  "description": "",
+  "main": "",
   "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build --verbose"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
+  "author": "",
+  "description": "",
   "dependencies": {
     "typescript": "^5.5.4"
   },
