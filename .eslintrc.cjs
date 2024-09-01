@@ -6,7 +6,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:import/recommended',
@@ -67,14 +67,17 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.json'],
+    warnOnUnsupportedTypeScriptVersion: true,
+    tsconfigRootDir: __dirname,
+    projectService: true,
+    EXPERIMENTAL_useProjectService: true,
   },
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.cts', '.mts', '.tsx'],
     },
     'import/resolver': {
-      typescript: { alwaysTryTypes: true, project: ['.'] },
+      typescript: { alwaysTryTypes: true },
     },
   },
 }
