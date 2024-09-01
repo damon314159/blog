@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "strict": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "importsNotUsedAsValues": "remove",
+    "isolatedModules": true,
+    "rootDir": "./src",
+    "outDir": "./build",
+    "composite": true
+  }
+}
