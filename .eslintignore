@@ -5,3 +5,5 @@ dist
 assets
 
 .*
+
+generate-package.js
