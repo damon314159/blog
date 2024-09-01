@@ -1,0 +1,100 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:require-extensions/recommended',
+    'plugin:@typescript-eslint/stylistic',
+    'airbnb',
+    'prettier',
+  ],
+  plugins: [
+    '@typescript-eslint',
+    'unicorn',
+    'sort-exports',
+    'require-extensions',
+  ],
+  rules: {
+    'arrow-body-style': 'error',
+    'prefer-arrow-callback': 'error',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      { ts: 'never', cts: 'never', mts: 'never', tsx: 'never' },
+    ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: ['*.config.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'],
+        optionalDependencies: false,
+      },
+    ],
+    'import/order': [
+      'error',
+      {
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        groups: [
+          'builtin',
+          'external',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type',
+        ],
+      },
+    ],
+    'sort-imports': [
+      'error',
+      { allowSeparatedGroups: true, ignoreDeclarationSort: true },
+    ],
+    'sort-exports/sort-exports': ['error', { sortDir: 'asc' }],
+    'sort-keys': 'error',
+    'sort-vars': 'error',
+    'import/prefer-default-export': 'off',
+    'linebreak-style': ['error', 'unix'],
+    'unicorn/prefer-node-protocol': 'error',
+    'no-param-reassign': ['error', { props: false }],
+    '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/no-confusing-void-expression': 'error',
+    '@typescript-eslint/prefer-for-of': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+  },
+  overrides: [
+    {
+      // enable the rule specifically for TypeScript files
+      files: ['*.ts', '*.cts', '*.mts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': [
+          'error',
+          { allowTypedFunctionExpressions: false },
+        ],
+      },
+    },
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json'],
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.cts', '.mts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: { alwaysTryTypes: true, project: ['.'] },
+    },
+  },
+}
