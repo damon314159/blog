@@ -14,20 +14,3 @@ const asyncPipe = (functions: Function[]) => (initialArg: unknown) =>
   )
 
 export { pipe, asyncPipe }
-
-const result = await asyncPipe([
-  (x: number) =>
-    new Promise((res) => {
-      setTimeout(() => {
-        res(x * 2)
-      }, 100)
-    }),
-  (x: number) =>
-    new Promise((res) => {
-      setTimeout(() => {
-        res(x + 1)
-      }, 100)
-    }),
-])(4)
-
-console.log(result)
