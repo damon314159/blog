@@ -1,1 +1,1 @@
-export * from './pipe.js'
+export * from './utils/pipe-compose.js'
