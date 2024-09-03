@@ -1,0 +1,16 @@
+{
+  "name": "@blog/api",
+  "version": "1.0.0",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "type": "module",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.0",
+    "prisma": "^5.19.0"
+  }
+}
