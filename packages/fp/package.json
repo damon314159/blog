@@ -1,0 +1,12 @@
+{
+  "name": "@blog/fp",
+  "version": "1.0.0",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "type": "module",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc --build"
+  }
+}
