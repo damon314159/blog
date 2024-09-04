@@ -15,6 +15,22 @@ type Pipe<Fns extends Fn[], Input = PipeInput<Fns>> = Fns extends [
     : (value: Input) => ReturnType<Fn0>
   : never
 
+// Type of the argument of the first function in the pipe
+type Last<Fns extends Fn[]> = Fns extends [...Fn[], infer F] ? F : never
+type ComposeInput<Fns extends Fn[]> = Parameters<Last<Fns>>[0]
+
+// Recursively apply one function at a time to check the types work all the way through
+type Compose<Fns extends Fn[], Input = ComposeInput<Fns>> = Fns extends [
+  ...infer Rest extends Fn[],
+  infer Fn0 extends Fn,
+]
+  ? Rest extends [...Fn[], infer Fn1 extends Fn]
+    ? ReturnType<Fn0> extends Parameters<Fn1>[0]
+      ? Compose<Rest, Input>
+      : 'InvalidComposeError'
+    : (value: Input) => ReturnType<Fn0>
+  : never
+
 // Test whether Pipe evaluated to 'InvalidPipeError' or not
 type ErrorCheck<T> = T extends string ? T : unknown
 
@@ -61,3 +77,43 @@ function pipe<Fns extends Fn[], P extends Pipe<Fns>>(
 }
 
 export { pipe }
+
+// Overloads for small numbers of arguments since any error messages are more direct
+function compose(): <Input>(arg: Input) => Input
+function compose<Input, A>(fn: (input: Input) => A): (arg: Input) => A
+function compose<Input, A, B>(
+  fn0: (input: A) => B,
+  fn1: (input: Input) => A
+): (arg: Input) => B
+function compose<Input, A, B, C>(
+  fn0: (input: B) => C,
+  fn1: (input: A) => B,
+  fn2: (input: Input) => A
+): (arg: Input) => C
+function compose<Input, A, B, C, D>(
+  fn0: (input: C) => D,
+  fn1: (input: B) => C,
+  fn2: (input: A) => B,
+  fn3: (input: Input) => A
+): (arg: Input) => D
+function compose<Input, A, B, C, D, E>(
+  fn0: (input: D) => E,
+  fn1: (input: C) => D,
+  fn2: (input: B) => C,
+  fn3: (input: A) => B,
+  fn4: (input: Input) => A
+): (arg: Input) => E
+// Fallback overload for any larger number of arguments that recursively checks the types
+function compose<Fns extends Fn[], C extends Compose<Fns>>(
+  ...fns: Fns & ErrorCheck<C>
+): C
+// Takes a list of functions and returns a single function that applies them in sequence from left to right
+function compose<Fns extends Fn[], C extends Compose<Fns>>(
+  ...fns: Fns & ErrorCheck<C>
+): C {
+  return ((initialArg: ComposeInput<Fns>) =>
+    // @ts-expect-error The Compose type ensures this is fine but TS reports it as an invalid overload of reduce
+    fns.reduceRight(reducer, initialArg)) as C
+}
+
+export { compose }
