@@ -1,3 +1,5 @@
+import { pipe } from '../utils/pipe-compose.js'
+
 // Define unique symbols to represent the type identifiers for None and Just
 const NONE_SYMBOL: unique symbol = Symbol('None')
 const JUST_SYMBOL: unique symbol = Symbol('Just')
@@ -28,10 +30,18 @@ function MPure<T>(input: T): Just<T> {
   })
 }
 
-type MMap<T, U> = (input: T) => Maybe<U>
+type MMappable<T, U> = (input: T) => U
 
-type MBind<T, U> = (map: MMap<T, U>) => (input: Maybe<T>) => Maybe<U>
-function MBind<T, U>(map: MMap<T, U>): (input: Maybe<T>) => Maybe<U> {
+type MMap<T, U> = (map: MMappable<T, U>) => (input: Maybe<T>) => Maybe<U>
+function MMap<T, U>(map: MMappable<T, U>): (input: Maybe<T>) => Maybe<U> {
+  return (input: Maybe<T>): Maybe<U> =>
+    input.type === NONE_SYMBOL ? None : MPure(map(input.value))
+}
+
+type MBindable<T, U> = (input: T) => Maybe<U>
+
+type MBind<T, U> = (map: MBindable<T, U>) => (input: Maybe<T>) => Maybe<U>
+function MBind<T, U>(map: MBindable<T, U>): (input: Maybe<T>) => Maybe<U> {
   return (input: Maybe<T>): Maybe<U> =>
     input.type === NONE_SYMBOL ? None : map(input.value)
 }
