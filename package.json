@@ -6,7 +6,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "tsc --build --verbose"
+    "build": "tsc --build --verbose",
+    "prebuild": "npm run lint && npm run format && npm run test",
+    "lint": "eslint --fix --ext 'js,ts,jsx,tsx' .",
+    "format": "prettier -w **/* -l",
+    "test": "tsx --test $(find . -wholename \"./packages/**/*.test.ts\" -o -wholename \"./apps/**/*.test.ts\")"
   },
   "workspaces": [
     "apps/*",

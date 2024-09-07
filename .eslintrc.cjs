@@ -69,8 +69,12 @@ module.exports = {
     sourceType: 'module',
     warnOnUnsupportedTypeScriptVersion: true,
     tsconfigRootDir: __dirname,
-    projectService: true,
-    EXPERIMENTAL_useProjectService: true,
+    project: [
+      './tsconfig.json',
+      './tsconfig.test.json',
+      './packages/**/tsconfig.json',
+      './apps/**/tsconfig.json',
+    ],
   },
   settings: {
     'import/parsers': {
