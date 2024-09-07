@@ -26,8 +26,9 @@ function createPackage(directory, packageName) {
     extends: '../../tsconfig.base.json',
     compilerOptions: {
       rootDir: './src',
-      outDir: './build',
+      outDir: './dist',
     },
+    exclude: ['dist', 'tests'],
   }
 
   // Define the contents of package.json
@@ -38,10 +39,8 @@ function createPackage(directory, packageName) {
     license: 'MIT',
     description: '',
     type: 'module',
-    main: 'build/index.js',
-    scripts: {
-      build: 'tsc --build',
-    },
+    main: 'dist/index.js',
+    scripts: {},
   }
 
   // Paths to the files to create
@@ -71,8 +70,18 @@ function createPackage(directory, packageName) {
   fs.writeFileSync(indexTsPath, '', 'utf8')
   console.log(`Created src/index.ts at ${indexTsPath}`)
 
+  const mainTsPath = path.join('tsconfig.json')
+  const mainTsconfig = JSON.parse(fs.readFileSync(mainTsPath, 'utf8'))
+  mainTsconfig.references.push({ path: `./${directory}` })
+  fs.writeFileSync(
+    mainTsPath,
+    `${JSON.stringify(mainTsconfig, null, 2)}\n`,
+    'utf8'
+  )
+  console.log('Top level tsconfig reference updated successfully')
+
   console.log(
-    'Package setup completed successfully. Run `npm i` in terminal to symlink new package'
+    '\nPackage setup completed successfully. Run `npm i` in terminal to symlink new package'
   )
 }
 

@@ -1,8 +1,15 @@
 {
   "files": [],
   "references": [
-    { "path": "./packages/utils" },
-    { "path": "./packages/fp" },
-    { "path": "./apps/api" }
+    {
+      "path": "./packages/utils"
+    },
+    {
+      "path": "./packages/fp"
+    },
+    {
+      "path": "./apps/api"
+    },
+
   ]
 }

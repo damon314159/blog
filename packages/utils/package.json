@@ -5,8 +5,6 @@
   "license": "MIT",
   "description": "",
   "type": "module",
-  "main": "build/index.js",
-  "scripts": {
-    "build": "tsc --build"
-  }
+  "main": "dist/index.js",
+  "scripts": {}
 }
