@@ -63,6 +63,14 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unsafe-function-type': 'off',
   },
+  overrides: [
+    {
+      files: ['*.test.ts'],
+      rules: {
+        '@typescript-eslint/no-floating-promises': 'off', // Disable the rule for test files
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',

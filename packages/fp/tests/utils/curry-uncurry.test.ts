@@ -2,7 +2,7 @@ import { strict as assert } from 'node:assert'
 import { describe, it } from 'node:test'
 import { curry, unCurry } from '../../src/utils/curry-uncurry.js'
 
-describe('curry', async () => {
+describe('curry', () => {
   it('should curry a function of two arguments into a function of one argument returning another function', () => {
     const add = (x: number, y: number) => x + y
     const curriedAdd = curry(add)
