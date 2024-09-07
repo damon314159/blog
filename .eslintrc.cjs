@@ -53,6 +53,7 @@ module.exports = {
       'error',
       { allowSeparatedGroups: true, ignoreDeclarationSort: true },
     ],
+    'import/no-named-as-default-member': 'off',
     'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'unix'],
     'unicorn/prefer-node-protocol': 'error',

@@ -51,7 +51,7 @@ function match<T, U, V>(
     input.type === NONE_SYMBOL ? onNone() : onJust(input.value)
 }
 
-const Maybe = Object.freeze({
+const maybe = Object.freeze({
   None,
   Pure,
   map,
@@ -59,6 +59,6 @@ const Maybe = Object.freeze({
   match,
 })
 
-export default Maybe
+export default maybe
 
 export type { Maybe, None, Just, MaybeMapping, MaybeBinding }
