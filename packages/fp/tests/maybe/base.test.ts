@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert'
 import { describe, it } from 'node:test'
-import maybe from '../../src/maybe/index.js'
-import type { Maybe } from '../../src/maybe/index.js'
+import maybe from '../../src/maybe/base.js'
+import type { Maybe } from '../../src/maybe/base.js'
 
 describe('Pure', () => {
   it('should create a Just value', () => {
