@@ -17,12 +17,15 @@ type Right<R> = Readonly<{
 // Either is the union of Left and Right
 type Either<L, R> = Left<L> | Right<R>
 
+// Constructor (also known as Pure or Return) for Right values
 function Pure<R>(input: R): Right<R> {
   return Object.freeze({
     type: RIGHT_SYMBOL,
     value: input,
   })
 }
+
+// Constructor (also known as Pure or Return) for Left values
 function PureL<L>(input: L): Left<L> {
   return Object.freeze({
     type: LEFT_SYMBOL,
@@ -30,9 +33,11 @@ function PureL<L>(input: L): Left<L> {
   })
 }
 
+// Mappings take any values and map them without a wrapping. The input types may themselves be Either
 type EitherMapping<R, Ret> = (input: R) => Ret
 type EitherMappingL<L, Ret> = (input: L) => Ret
 
+// Map both left and right values according to the specific type
 function map<L, RetL, R, RetR>(
   mappingL: EitherMappingL<L, RetL>,
   mapping: EitherMapping<R, RetR>
@@ -43,6 +48,7 @@ function map<L, RetL, R, RetR>(
       : Pure(mapping(input.value))
 }
 
+// Map only right values, leaving left values unchanged
 function mapR<L, R, RetR>(
   mapping: EitherMapping<R, RetR>
 ): (input: Either<L, R>) => Either<L, RetR> {
@@ -50,6 +56,7 @@ function mapR<L, R, RetR>(
     input.type === LEFT_SYMBOL ? input : Pure(mapping(input.value))
 }
 
+// Map only left values, leaving right values unchanged
 function mapL<L, R, RetL>(
   mapping: EitherMappingL<L, RetL>
 ): (input: Either<L, R>) => Either<RetL, R> {
@@ -57,9 +64,11 @@ function mapL<L, R, RetL>(
     input.type === LEFT_SYMBOL ? PureL(mapping(input.value)) : input
 }
 
+// Bindings take any values and map them with a wrapping. The input types may themselves be Either
 type EitherBinding<R, RToL, RToR> = (input: R) => Either<RToL, RToR>
 type EitherBindingL<L, RToL, RToR> = (input: L) => Either<RToL, RToR>
 
+// Bind both left and right values according to the specific type
 function bind<L, LToL, LToR, R, RToL, RToR>(
   mappingL: EitherBindingL<L, LToL, LToR>,
   mapping: EitherBinding<R, RToL, RToR>
@@ -68,6 +77,7 @@ function bind<L, LToL, LToR, R, RToL, RToR>(
     input.type === LEFT_SYMBOL ? mappingL(input.value) : mapping(input.value)
 }
 
+// Bind only right values, leaving left values unchanged
 function bindR<L, R, RToL, RToR>(
   mapping: EitherBinding<R, RToL, RToR>
 ): (input: Either<L, R>) => Either<L | RToL, RToR> {
@@ -75,6 +85,7 @@ function bindR<L, R, RToL, RToR>(
     input.type === LEFT_SYMBOL ? input : mapping(input.value)
 }
 
+// Bind only left values, leaving right values unchanged
 function bindL<L, LToL, LToR, R>(
   mapping: EitherBindingL<L, LToL, LToR>
 ): (input: Either<L, R>) => Either<LToL, LToR | R> {
@@ -82,6 +93,7 @@ function bindL<L, LToL, LToR, R>(
     input.type === LEFT_SYMBOL ? mapping(input.value) : input
 }
 
+// Extract the values of the Either, providing callbacks for Left and Right
 function match<L, RetL, R, RetR>(
   onLeft: (input: L) => RetL,
   onRight: (input: R) => RetR
