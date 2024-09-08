@@ -59,6 +59,8 @@ function match<T, U, V>(
 }
 
 const maybe = Object.freeze({
+  NONE_SYMBOL,
+  JUST_SYMBOL,
   None,
   Pure,
   map,

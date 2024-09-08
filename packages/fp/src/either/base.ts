@@ -103,6 +103,8 @@ function match<L, RetL, R, RetR>(
 }
 
 const either = Object.freeze({
+  LEFT_SYMBOL,
+  RIGHT_SYMBOL,
   Pure,
   PureL,
   map,
