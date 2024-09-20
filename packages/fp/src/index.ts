@@ -4,3 +4,4 @@ export * from './utils/memo.js'
 
 export * from './maybe/base.js'
 export * from './either/base.js'
+export * from './io/base.js'
