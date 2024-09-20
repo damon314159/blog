@@ -3,14 +3,14 @@ import { describe, it } from 'node:test'
 import maybe from '../../src/maybe/base.js'
 import type { Maybe } from '../../src/maybe/base.js'
 
-describe('Pure', () => {
+describe('Maybe Pure', () => {
   it('should create a Just value', () => {
     const justValue = maybe.Pure(42)
     assert.strictEqual(justValue.value, 42)
   })
 })
 
-describe('map', () => {
+describe('Maybe map', () => {
   it('should map over a Just value', () => {
     const justValue = maybe.Pure(10)
     const addFive = (x: number) => x + 5
@@ -42,7 +42,7 @@ describe('map', () => {
   })
 })
 
-describe('bind', () => {
+describe('Maybe bind', () => {
   it('should bind over a Just value and return another Just', () => {
     const justValue = maybe.Pure(20)
     const halfIfEven = (x: number) =>
@@ -77,7 +77,7 @@ describe('bind', () => {
   })
 })
 
-describe('match', () => {
+describe('Maybe match', () => {
   it('should execute onNone for None', () => {
     const onNone = () => 'No value'
     const onJust = (x: number) => `Value: ${x}`

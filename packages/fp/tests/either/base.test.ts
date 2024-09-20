@@ -3,7 +3,7 @@ import { describe, it } from 'node:test'
 import either from '../../src/either/base.js'
 import type { Either } from '../../src/either/base.js'
 
-describe('Pure', () => {
+describe('Either Pure', () => {
   it('should create a Right value', () => {
     const rightValue = either.Pure(42)
     assert.strictEqual(rightValue.type, either.RIGHT_SYMBOL)
@@ -11,7 +11,7 @@ describe('Pure', () => {
   })
 })
 
-describe('PureL', () => {
+describe('Either PureL', () => {
   it('should create a Left value', () => {
     const leftValue = either.PureL('Error')
     assert.strictEqual(leftValue.type, either.LEFT_SYMBOL)
@@ -19,7 +19,7 @@ describe('PureL', () => {
   })
 })
 
-describe('map', () => {
+describe('Either map', () => {
   it('should map over a Right value', () => {
     const rightValue = either.Pure(10)
     const double = (x: number) => x * 2
@@ -45,7 +45,7 @@ describe('map', () => {
   })
 })
 
-describe('mapR', () => {
+describe('Either mapR', () => {
   it('should map only Right values, leaving Left unchanged', () => {
     const rightValue = either.Pure(10)
     const leftValue = either.PureL('Error')
@@ -60,7 +60,7 @@ describe('mapR', () => {
   })
 })
 
-describe('mapL', () => {
+describe('Either mapL', () => {
   it('should map only Left values, leaving Right unchanged', () => {
     const rightValue = either.Pure(20)
     const leftValue = either.PureL('Error')
@@ -75,7 +75,7 @@ describe('mapL', () => {
   })
 })
 
-describe('bind', () => {
+describe('Either bind', () => {
   it('should bind over a Right value and return another Right', () => {
     const rightValue = either.Pure(5)
     const multiplyOrFail = (x: number): Either<string, number> =>
@@ -106,7 +106,7 @@ describe('bind', () => {
   })
 })
 
-describe('bindR', () => {
+describe('Either bindR', () => {
   it('should bind only Right values, leaving Left unchanged', () => {
     const rightValue = either.Pure(8)
     const leftValue = either.PureL('No operation')
@@ -121,7 +121,7 @@ describe('bindR', () => {
   })
 })
 
-describe('bindL', () => {
+describe('Either bindL', () => {
   it('should bind only Left values, leaving Right unchanged', () => {
     const rightValue = either.Pure(7)
     const leftValue = either.PureL('Error')
@@ -136,7 +136,7 @@ describe('bindL', () => {
   })
 })
 
-describe('match', () => {
+describe('Either match', () => {
   it('should execute onLeft for Left', () => {
     const leftValue = either.PureL('Error')
     const onLeft = (x: string) => `Left value: ${x}`
