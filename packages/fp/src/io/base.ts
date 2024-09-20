@@ -33,3 +33,20 @@ type IOBinding<T, U> = (input: T) => IO<U>
 function bind<T, U>(mapping: IOBinding<T, U>): (input: IO<T>) => IO<U> {
   return (input: IO<T>): IO<U> => Pure(() => mapping(input.value()).value())
 }
+
+// Perform the impure action encapsulated in an IO.
+function run<T>(input: IO<T>): T {
+  return input.value()
+}
+
+const io = {
+  IO_SYMBOL,
+  Pure,
+  map,
+  bind,
+  run,
+}
+
+export default io
+
+export type { IO, Action, IOMapping, IOBinding }
