@@ -21,6 +21,7 @@ model User {
 
 model Post {
   id        Int       @id @default(autoincrement())
+  uuid      String    @unique @default(uuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   title     String    @unique
@@ -33,6 +34,7 @@ model Post {
 
 model Comment {
   id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
