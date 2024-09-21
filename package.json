@@ -18,9 +18,6 @@
   ],
   "author": "",
   "description": "",
-  "dependencies": {
-    "typescript": "^5.5.4"
-  },
   "devDependencies": {
     "@types/node": "^22.5.2",
     "@typescript-eslint/eslint-plugin": "^8.3.0",
@@ -37,7 +34,8 @@
     "prettier": "^3.3.3",
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1",
-    "tsx": "^4.19.0"
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.2"
   },
   "overrides": {
     "rimraf": "^4.0.0"
