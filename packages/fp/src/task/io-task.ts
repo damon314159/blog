@@ -1,3 +1,6 @@
+import type { Task } from './base.js'
+import type { IO } from '../io/base.js'
+
 // Define unique symbols to represent the type identifier for IOTask
 const IO_TASK_SYMBOL: unique symbol = Symbol('Task')
 
@@ -24,20 +27,24 @@ type IOTaskMapping<T, U> = (input: T) => U
 // Map the value that would be returned by the deferred task
 function map<T, U>(
   mapping: IOTaskMapping<T, U>
-): (input: IOTask<T>) => IOTask<U> {
-  return (input: IOTask<T>): IOTask<U> =>
-    Pure(() => input.value().then(mapping))
+): (input: IO<T> | Task<T> | IOTask<T>) => IOTask<U> {
+  return (input: IO<T> | Task<T> | IOTask<T>): IOTask<U> =>
+    Pure(() => Promise.resolve(input.value()).then(mapping))
 }
 
 // Bindings take any value and map them with a wrapping
-type IOTaskBinding<T, U> = (input: T) => IOTask<U>
+type IOTaskBinding<T, U> = (input: T) => IO<U> | Task<U> | IOTask<U>
 
 // Binds to the value that would be returned by the deferred task
 function bind<T, U>(
   mapping: IOTaskBinding<T, U>
-): (input: IOTask<T>) => IOTask<U> {
-  return (input: IOTask<T>): IOTask<U> =>
-    Pure(() => input.value().then((result: T) => mapping(result).value()))
+): (input: IO<T> | Task<T> | IOTask<T>) => IOTask<U> {
+  return (input: IO<T> | Task<T> | IOTask<T>): IOTask<U> =>
+    Pure(() =>
+      Promise.resolve(input.value()).then((result: T) =>
+        mapping(result).value()
+      )
+    )
 }
 
 // Perform the deferred task encapsulated in a Task.
