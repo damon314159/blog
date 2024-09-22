@@ -1,4 +1,4 @@
-import { either, ioTask, pipe } from '@blog/fp'
+import { either, io, ioTask, pipe } from '@blog/fp'
 import { createUser, hashPassword } from '../services/user.js'
 import validate from '../validators/validate.js'
 import type { prisma } from '../bin/client.js'
@@ -42,5 +42,11 @@ const createUserController = pipe(
     validate(extractCreateUserArgs)
   ),
   ioTaskEitherBind(hashPassword),
-  ioTaskEitherBind(createUser)
+  ioTaskEitherBind(createUser),
+  ioTask.run
 )
+
+const handler = (req: Request) =>
+  createUserController(io.Pure(() => either.Pure(req)))
+
+export { handler }
