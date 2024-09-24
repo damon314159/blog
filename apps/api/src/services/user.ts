@@ -1,32 +1,30 @@
-import { either, ioTask, task } from '@blog/fp'
 import { compare, hash } from 'bcryptjs'
+import * as E from 'fp-ts/Either'
 import { prisma } from '../bin/client.js'
-import type { Either, IOTask, Task } from '@blog/fp'
 import type { Prisma, User } from '@prisma/client'
+import type * as TE from 'fp-ts/TaskEither'
 
 type CreateUserArgs = Prisma.Args<typeof prisma.user, 'create'>
 
 // Take the createUserArgs, and return a task that hashes the password
-const hashPassword = <E>(
-  args: CreateUserArgs
-): Task<Either<E, CreateUserArgs>> =>
-  task.Pure(() =>
+const hashPassword =
+  (args: CreateUserArgs): TE.TaskEither<Error, CreateUserArgs> =>
+  () =>
     hash(args.data.password, 12).then(
       (hashed: string) =>
-        either.Pure(
+        E.right(
           Object.freeze({ ...args, data: { ...args.data, password: hashed } })
         ),
-      (error: E) => either.PureL(error)
+      (error: Error) => E.left(error)
     )
-  )
 
 // Return a task to perform the DB write
-const createUser = <E>(args: CreateUserArgs): IOTask<Either<E, User>> =>
-  ioTask.Pure(() =>
+const createUser =
+  (args: CreateUserArgs): TE.TaskEither<Error, User> =>
+  () =>
     prisma.user.create(args).then(
-      (user: User) => either.Pure(Object.freeze(user)),
-      (error: E) => either.PureL(error)
+      (user: User) => E.right(Object.freeze(user)),
+      (error: Error) => E.left(error)
     )
-  )
 
 export { hashPassword, createUser }
