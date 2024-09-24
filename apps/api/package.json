@@ -8,7 +8,6 @@
   "main": "dist/bin/www.js",
   "scripts": {},
   "dependencies": {
-    "@blog/fp": "^1.0.0",
     "@blog/utils": "^1.0.0",
     "@prisma/client": "^5.19.0",
     "bcryptjs": "^2.4.3",
