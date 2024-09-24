@@ -1,7 +1,6 @@
 #!/usr/bin/env -S npx tsx
 
 import http from 'node:http'
-import { noop } from '@blog/fp'
 import Debug from 'debug'
 import app from '../app.js'
 import type { HttpError } from 'http-errors'
@@ -9,7 +8,7 @@ import type { AddressInfo } from 'node:net'
 
 // Mock Debug with an empty function whenever mode is not development
 const debug =
-  process.env.NODE_ENV === 'development' ? Debug('app:server') : noop
+  process.env.NODE_ENV === 'development' ? Debug('app:server') : () => {}
 
 // Normalize a port into a number, string, or false.
 function normalizePort(val: string): number | string | false {

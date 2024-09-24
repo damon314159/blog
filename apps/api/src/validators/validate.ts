@@ -1,10 +1,9 @@
-import { either } from '@blog/fp'
 import { validationResult } from 'express-validator'
-import type { Either } from '@blog/fp'
+import * as E from 'fp-ts/Either'
 import type { Request } from 'express'
 import type { ValidationError } from 'express-validator'
 
-type ValidationResult<T> = Either<ValidationError[], T>
+type ValidationResult<T> = E.Either<ValidationError[], T>
 type RequestTo<T> = (req: Request) => T
 
 function validate<T>(
@@ -15,11 +14,11 @@ function validate<T>(
 
     if (!errors.isEmpty()) {
       // If validation fails, return ValidationError[] in either Left
-      return either.PureL(errors.array())
+      return E.left(errors.array())
     }
 
     // Else map request and return in either Right
-    return either.Pure(mapping(req))
+    return E.right(mapping(req))
   }
 }
 
