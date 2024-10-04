@@ -3,7 +3,6 @@ import type { ValidationChain } from 'express-validator'
 
 const id = (location = body, field = 'id'): ValidationChain =>
   location(field)
-    .escape()
     .exists({ values: 'falsy' })
     .withMessage('ID must be provided')
     .isInt({ gt: 0 })
@@ -13,7 +12,6 @@ const idOptional = (location = body, field = 'id'): ValidationChain =>
 
 const uuid = (location = body, field = 'uuid'): ValidationChain =>
   location(field)
-    .escape()
     .exists({ values: 'falsy' })
     .withMessage('UUID must be provided')
     .isUUID()
