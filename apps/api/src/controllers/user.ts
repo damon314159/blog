@@ -13,7 +13,7 @@ type CreateUserArgs = Prisma.Args<typeof prisma.user, 'create'>
 
 const extractCreateUserArgs = (
   req: Request<object, object, CreateUserArgs['data']>
-) =>
+): Readonly<CreateUserArgs> =>
   pipe(
     {
       data: {
@@ -27,7 +27,7 @@ const extractCreateUserArgs = (
 
 const createUserController: (
   req: Request
-) => TE.TaskEither<ValidationError[] | Error, User> = flow(
+) => TE.TaskEither<ValidationError[] | Error, Readonly<User>> = flow(
   validate,
   E.map(extractCreateUserArgs),
   TE.fromEither,
