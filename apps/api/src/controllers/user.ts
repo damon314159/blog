@@ -1,4 +1,5 @@
 import { freeze } from '@blog/functional'
+import * as E from 'fp-ts/Either'
 import { flow, pipe } from 'fp-ts/function'
 import * as TE from 'fp-ts/TaskEither'
 import { createUser, hashPassword } from '../services/user.js'
@@ -27,8 +28,9 @@ const extractCreateUserArgs = (
 const createUserController: (
   req: Request
 ) => TE.TaskEither<ValidationError[] | Error, User> = flow(
-  TE.of,
-  TE.flatMapEither(validate(extractCreateUserArgs)),
+  validate,
+  E.map(extractCreateUserArgs),
+  TE.fromEither,
   TE.flatMap(hashPassword),
   TE.flatMap(createUser),
   TE.map(freeze)
