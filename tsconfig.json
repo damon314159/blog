@@ -6,6 +6,9 @@
     },
     {
       "path": "./apps/api"
+    },
+    {
+      "path": "./packages/functional"
     }
   ]
 }

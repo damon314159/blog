@@ -1,0 +1,10 @@
+{
+  "name": "@blog/functional",
+  "version": "1.0.0",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {}
+}
