@@ -1,4 +1,5 @@
-import { flow } from 'fp-ts/function'
+import { freeze } from '@blog/functional'
+import { flow, pipe } from 'fp-ts/function'
 import * as TE from 'fp-ts/TaskEither'
 import { createUser, hashPassword } from '../services/user.js'
 import validate from '../validators/validate.js'
@@ -12,13 +13,16 @@ type CreateUserArgs = Prisma.Args<typeof prisma.user, 'create'>
 const extractCreateUserArgs = (
   req: Request<object, object, CreateUserArgs['data']>
 ) =>
-  Object.freeze({
-    data: {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+  pipe(
+    {
+      data: {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+      },
     },
-  })
+    freeze
+  )
 
 const createUserController: (
   req: Request
@@ -26,7 +30,8 @@ const createUserController: (
   TE.of,
   TE.flatMapEither(validate(extractCreateUserArgs)),
   TE.flatMap(hashPassword),
-  TE.flatMap(createUser)
+  TE.flatMap(createUser),
+  TE.map(freeze)
 )
 
 export { createUserController }
