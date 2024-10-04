@@ -62,7 +62,14 @@ module.exports = {
     '@typescript-eslint/no-confusing-void-expression': 'error',
     '@typescript-eslint/prefer-for-of': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-unsafe-function-type': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: {
+          arguments: false,
+        },
+      },
+    ],
   },
   overrides: [
     {
