@@ -6,6 +6,7 @@ import 'express-async-handler'
 import helmet from 'helmet'
 import methodOverride from 'method-override'
 import logger from 'morgan'
+import userRouter from './routes/user.js'
 
 const app: Application = express()
 
@@ -38,6 +39,7 @@ app.use(cookieParser())
 // Configure express to search for assets in public
 app.use(express.static(resolve(__dirname(import.meta), 'public')))
 
-// Routes go here
+// Routes
+app.use('/users', userRouter)
 
 export default app
